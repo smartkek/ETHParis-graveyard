@@ -126,6 +126,8 @@ contract DeadTokens is IDeadTokens {
 
 contract Crematorium {
     IDeadTokens dt;
+    uint public slotsCleared;
+    
     constructor(IDeadTokens _dt) public {
         dt = _dt;
     }
@@ -154,6 +156,10 @@ contract Crematorium {
         
         if (amount > 0) {
             token.transferFrom(user, address(this), amount);
+            if (amount == approved) {
+                // this guy just sent all his tokens
+                slotsCleared += 1;
+            } 
         }
         
         emit Burned(address(token), user, amount, message);
