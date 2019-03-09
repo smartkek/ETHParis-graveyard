@@ -1,7 +1,5 @@
 var erc20abi = JSON.parse('[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"name","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"totalSupply","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"decimals","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"symbol","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}]');
-var allTokens = new Array();
-var allTokenAddresses = new Array();
-var addedToTop = new Array()
+var totalBurnt = 0;
 
 $('document').ready(function() {
     if (typeof web3 !== 'undefined') {
@@ -14,71 +12,60 @@ $('document').ready(function() {
     }
 
     var crematorium = '0x06b064a92ebbc593e2632e7e5822018ec46a83ca';
+    var tokenAddr = findGetParameter('tokenAddr');
 
     var feedFilter = web3js.eth.filter({
         fromBlock: '1',
         toBlock: 'latest',
-        topics: ['0x0abb2f72a2e4d8a5c05e1e4595e9b78e5b8189d2188ad3f5457706a1061e0a9f'],
+        topics: [
+            '0x0abb2f72a2e4d8a5c05e1e4595e9b78e5b8189d2188ad3f5457706a1061e0a9f',
+            '0x000000000000000000000000' + tokenAddr.slice(2)
+        ],
         address: crematorium
     });
     feedFilter.watch(function(err, res) {
         if (!err) {
             var eventData = parseEventData(res);
-            addToBurnFeed(eventData);
-            console.log(res);
-            if (allTokens[eventData.token] === undefined) {
-                allTokens[eventData.token] = 0;
-                allTokenAddresses.push(eventData.token);
-            }
-            allTokens[eventData.token] += eventData.amount;
+            console.log('sas');
+            addComment(eventData);
+            totalBurnt += eventData.amount;
         } else {
             console.log(err);
         }
     });
-    setInterval(updateTopList, 3000);
+    setTimeout(function(){updateTokenInfo(tokenAddr)}, 500);
 });
 
-async function updateTopList() {
-    await allTokens.sort(function(a, b) {
-        return b - a;
-    });
 
-    for (i = 0; i < allTokenAddresses.length; i++) {
-        tokenAddr = allTokenAddresses[i];
-        updateTopListItem(tokenAddr, i);
-    }
-}
-
-function updateTopListItem(tokenAddr, i) {
+function updateTokenInfo(tokenAddr) {
     getTokenInfo(tokenAddr, function(name, symbol, totalSupply) {
-        var topItem = topItemTemplate.replace("TOKEN_NAME", name);
-        topItem = topItem.replace("TOKEN_SYMBOL", symbol);
-        topItem = topItem.replace("TOKEN_AMOUNT", allTokens[tokenAddr]);
-        topItem = topItem.replace("INDEX", i+1);
-        topItem = topItem.replace("PERCENT", allTokens[tokenAddr] / totalSupply * 100);
-        topItem = topItem.replace("COMMENTS_NUM", 20);
-        topItem = topItem.replace("TOKEN_ADDR", tokenAddr);
-        if (addedToTop[tokenAddr] !== true) {
-            $('#list-top-tokens').append(topItem);
-            addedToTop[tokenAddr] = true;
-        } else {
-            $('#' + tokenAddr).replaceWith(topItem);
-        }
+        $('#title-token-name').text(titleTokenNameText.replace('TOKEN_NAME', name).replace('TOKEN_SYMBOL', symbol));
+        $('#title-token-addr').text(titleTokenAddrText.replace('TOKEN_ADDR', tokenAddr));
+        $('#title-total-burnt').text(titleTotalBurntText.replace('TOKEN_AMOUNT', totalBurnt).replace('PERCENT', totalBurnt / totalSupply * 100));
     });
 }
 
-async function addToBurnFeed(eventData) {
-    // create feed item
-    var feedItem = feedItemTemplate.replace("TOKEN_AMOUNT", eventData.amount);
-    feedItem = feedItem.replace("BURNER_ADDR", eventData.burner);
-    feedItem = feedItem.replace("BURNER_MSG", eventData.message);
 
-    // get token info and add feedItem to page
-    getTokenInfo(eventData.token, function(name, symbol) {
-        feedItem = feedItem.replace("TOKEN_NAME", name);
-        feedItem = feedItem.replace("TOKEN_SYMBOL", symbol);
-        $('#list-burn-feed').append(feedItem);
-    })
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
+}
+
+function addComment(eventData) {
+    // create feed item
+    var commentItem = commentItemTemplate.replace("TOKEN_AMOUNT", eventData.amount);
+    commentItem = commentItem.replace("BURNER_ADDR", eventData.burner);
+    commentItem = commentItem.replace("BURNER_MSG", eventData.message);
+
+    $('#list-comments').append(commentItem);
 }
 
 
@@ -110,42 +97,43 @@ function getTokenInfo(tokenAddr, cb) {
 }
 
 
-var feedItemTemplate = `
-<div class="row">
-  <div class="card">
-    <div class="card-header">TOKEN_NAME (TOKEN_SYMBOL)</div>
-    <div class="card-body">
-      <h5 class="card-title"> TOKEN_AMOUNT tokens</h5>
-      <h6 class="card-subtitle mb-2 text-muted">BURNER_ADDR</h6>
-
-      <p class="card-text">BURNER_MSG</p>
+var commentItemTemplate = `
+<li class="list-group-item">
+  <div class="row">
+    <div class="col-md-6">
+      <small class="text-muted">BURNER_ADDR</small>
+    </div>
+    <div class="col-md-4">
+      <small class="text-muted">pkondr.eth</small>
     </div>
   </div>
-</div>
-<br>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <p>BURNER_MSG</p>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h6 class="text-muted">TOKEN_AMOUNT tokens</h6>
+    </div>
+  </div>
+</li>
 `
 
-var topItemTemplate = `
-<li class="list-group-item flex-column align-items-start" id="TOKEN_ADDR">
-    <div class="row">
-      <div class="col-md-1">
-        <h1>INDEX</h1>
-      </div>
-      <div class="col-md-11">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">TOKEN_NAME (TOKEN_SYMBOL)</h5>
-          <small>PERCENT%</small>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            TOKEN_AMOUNT total burned
-          </div>
-          <div class="col-md-4">
-          <button type="button" class="btn btn-secondary">COMMENTS_NUM comments</button>
-          <button type="button" class="btn btn-danger">Burn</button>
-          </div>
-        </div>
-      </div>
-    </div>
-</li>
+var titleTotalBurntText = `
+Total burnt: TOKEN_AMOUNT (PERCENT%)
+`
+
+var titlePositionText = `
+Position: INDEX
+`
+
+var titleTokenNameText = `
+TOKEN_NAME (TOKEN_SYMBOL)
+`
+
+var titleTokenAddrText = `
+TOKEN_ADDR
 `
