@@ -47,9 +47,9 @@ interface IOracle {
 }
 
 contract OracleChainlink is IOracle {
-    DeadTokens internal dt;
+    IDeadTokens internal dt;
 
-    constructor(DeadTokens _dt) public {
+    constructor(IDeadTokens _dt) public {
         dt = _dt;
     }
     
@@ -65,10 +65,10 @@ contract OracleChainlink is IOracle {
 }
 
 contract OracleWhitelist is IOracle {
-    DeadTokens internal dt;
+    IDeadTokens internal dt;
     address internal owner;
     
-    constructor(DeadTokens _dt) public {
+    constructor(IDeadTokens _dt) public {
         owner = msg.sender;
         dt = _dt;
     }
