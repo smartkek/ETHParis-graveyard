@@ -13,15 +13,15 @@
         <div class="row">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Token name (TKN)</h5>
-              <small class="card-subtitle mb-2 text-muted">0x897354ebe940d137c4040f62a793f39b2388f236</small>
-              <small class="card-subtitle mb-2 text-muted">myawesometoken.eth</small>
+              <h5 class="card-title" id="title-token-name">Token name (TKN)</h5>
+              <small class="card-subtitle mb-2 text-muted" id="title-token-addr">0x897354ebe940d137c4040f62a793f39b2388f236</small>
+              <small class="card-subtitle mb-2 text-muted" id="title-token-ens">myawesometoken.eth</small>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
-              <p class="card-text">Total burnt: 1543 (57%)</p>
-              <p class="card-text">Position: 1</p>
+              <p class="card-text" id="title-total-burnt">Total burnt: 1543 (57%)</p>
+              <p class="card-text" id="title-position">Position: 1</p>
             </div>
           </div>
         </div>
@@ -39,55 +39,14 @@
           <div class="card-header">
             Total 536 tokens
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-md-6">
-                  <small class="text-muted">0x897354ebe940d137c4040f62a793f39b2388f236</small>
-                </div>
-                <div class="col-md-4">
-                  <small class="text-muted">pkondr.eth</small>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                  <p> MY ANGRY MESSAGE IN 140 SYMBOLS. BURN IN HELL!!!11!</p>
-                </div>
-                <div class="col-md-1"></div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <h6 class="text-muted"> 1970 tokens</h6>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-md-6">
-                  <small class="text-muted">0x897354ebe940d137c4040f62a793f39b2388f236</small>
-                </div>
-                <div class="col-md-4">
-                  <small class="text-muted">pkondr.eth</small>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                  <p> MY ANGRY MESSAGE IN 140 SYMBOLS. BURN IN HELL!!!11!</p>
-                </div>
-                <div class="col-md-1"></div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <h6 class="text-muted"> 1970 tokens</h6>
-                </div>
-              </div>
-            </li>
+          <ul class="list-group list-group-flush" id="list-comments">
           </ul>
         </div>
       </div>
 
     </div>
   </div>
+
+    <script type="text/javascript" src="{{url_for('static', filename='info.js') }}"></script>
+
 </body>
