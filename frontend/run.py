@@ -5,7 +5,14 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello(name=None):
-    return render_template('hello.html')
+def index():
+    return render_template('index.html')
 
 
+@app.route('/info/<token>')
+def info(token):
+    return render_template('info.html', token=token)
+
+
+if __name__ == '__main__':
+    app.run()
