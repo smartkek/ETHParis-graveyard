@@ -13,7 +13,7 @@ $('document').ready(function() {
         web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     }
 
-    var crematorium = '0x06b064a92ebbc593e2632e7e5822018ec46a83ca';
+    var crematorium = '0xd5d8b6a9f14A5437e1Fc999A861d1A8878524968';
 
     var feedFilter = web3js.eth.filter({
         fromBlock: '1',
@@ -43,9 +43,26 @@ $('document').ready(function() {
         return false;
     });
 
-    $('#list-top-tokens').on("click", "button.btn-burn", function() {
-        var tokenAddr = $(this).attr('id').slice(5);
-        window.location.href = "/burn?tokenAddr=" + tokenAddr;
+    function disableScroll ()
+    {
+        $('html, body').on('mousewheel',function(){
+            return false;
+        });
+    }
+
+    function enableScroll()
+    {
+        $('html, body').off('mousewheel');
+    }
+
+    $('#list-top-tokens').on("click", "button.btn-my-burn", function() {
+        var tokenAddr = $(this).attr('id').slice(4);
+        $('#inputTokenAddress').val(tokenAddr);
+        setTimeout(function(){setUserTokensText(tokenAddr)}, 500);
+        $('.popup-container').fadeIn(400, disableScroll);
+            $('.popup').animate(400);
+            $('body').addClass('stop-scrolling');
+            $('body').bind('touchmove', function(e){e.preventDefault()});
         return false;
     });
 });
@@ -89,6 +106,7 @@ async function addToBurnFeed(eventData) {
     getTokenInfo(eventData.token, function(name, symbol) {
         feedItem = feedItem.replace("TOKEN_NAME", name);
         feedItem = feedItem.replace("TOKEN_SYMBOL", symbol);
+        feedItem = feedItem.replace(/TOKEN_ADDR/gi, eventData.token);
         $('#list-burn-feed').append(feedItem);
     })
 }
@@ -123,41 +141,23 @@ function getTokenInfo(tokenAddr, cb) {
 
 
 var feedItemTemplate = `
-<div class="row">
-  <div class="card">
-    <div class="card-header">TOKEN_NAME (TOKEN_SYMBOL)</div>
-    <div class="card-body">
-      <h5 class="card-title"> TOKEN_AMOUNT tokens</h5>
-      <h6 class="card-subtitle mb-2 text-muted">BURNER_ADDR</h6>
-
-      <p class="card-text">BURNER_MSG</p>
-    </div>
-  </div>
+<div class="story">
+  <a href="info?tokenAddr=TOKEN_ADDR" class="story-project-name">TOKEN_NAME</a>
+  <p class="author-comm">BURNER_ADDR</p>
+  <p class="message">BURNER_MSG</p>
+  <p>Burnt TOKEN_AMOUNT</p>
 </div>
-<br>
 `
 
 var topItemTemplate = `
-<li class="list-group-item flex-column align-items-start" id="TOKEN_ADDR">
-    <div class="row">
-      <div class="col-md-1">
-        <h1>INDEX</h1>
-      </div>
-      <div class="col-md-11">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">TOKEN_NAME (TOKEN_SYMBOL)</h5>
-          <small>PERCENT%</small>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            TOKEN_AMOUNT total burned
-          </div>
-          <div class="col-md-4">
-          <button type="button" class="btn btn-secondary btn-comments" id="info-TOKEN_ADDR">comments</button>
-          <button type="button" class="btn btn-danger btn-burn" id="burn-TOKEN_ADDR">Burn</button>
-          </div>
-        </div>
-      </div>
+<div class="project" id="TOKEN_ADDR">
+    <div class="project-header">
+      <a href="info?tokenAddr=TOKEN_ADDR" class="token-name">TOKEN_NAME</a>
+      <div class="btn-burn"><button class="btn-burn-project click btn-my-burn" id="btn-TOKEN_ADDR">Burn</button></div>
     </div>
-</li>
+  <div class="project-body">
+  <div class="short-name">TOKEN_SYMBOL</div>
+ <p>Total tokens TOTAL_TOKENS burnt TOKEN_AMOUNT PERCENT% </p>
+  </div>
+</div>
 `

@@ -2,6 +2,7 @@
 
 **[Proof-of-burn "twitter"](https://swarm-gateways.net/bzz:/56711d06a256afcb7c22d7dc9dbd69d80c0f57bb11d4b3556d9d21dcdf53db76/)**
 
+
 #### Abstract
 
 In our dapp you can post a comment about a particular token, but only after you burn a certain amount of that token. 
@@ -31,6 +32,7 @@ Finally, there are cases, when tokens are burned in healthy projects. In situati
 
 Load your MetaMask <br/>↓<br/>Go to [this link](https://swarm-gateways.net/bzz:/56711d06a256afcb7c22d7dc9dbd69d80c0f57bb11d4b3556d9d21dcdf53db76/) <br/>↓<br/>Select a token which you want to burn or add a new one to Cleanedapp's list<br/>↓<br/>Set the amount of tokens to be cleaned up<br/>↓<br/><b>Express yourself </b><br/><br/><small><i>Now everyone see what you think about this token!</i></small>
 
+
 ---
 #### Smart Contracts
 
@@ -52,3 +54,4 @@ You can also interact with the app simply by sending transactions to smart contr
 * **0x Instant** is used for buying tokens. <br/>
 * **ENS** is used as a name service. <br/>
 * **SKALE** is used for hosting static frontend. <br/>
+
