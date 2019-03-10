@@ -15,13 +15,6 @@ $(document).ready(function() {
         web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     }
 
-
-    tokenAddr = findGetParameter('tokenAddr');
-    if (tokenAddr !== null) {
-        $('#inputTokenAddress').val(tokenAddr);
-        setTimeout(function(){setUserTokensText(tokenAddr)}, 500);
-    }
-
     $('#btn-burn').click(function() {
         var tokenAddr = $('#inputTokenAddress').val().toLowerCase();
         var tokenAmount = $('#inputTokenAmount').val();
@@ -136,17 +129,4 @@ function getTokenInfo(tokenAddr, cb) {
             });
         });
     });
-}
-
-function findGetParameter(parameterName) {
-    var result = null,
-        tmp = [];
-    location.search
-        .substr(1)
-        .split("&")
-        .forEach(function (item) {
-          tmp = item.split("=");
-          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-        });
-    return result;
 }

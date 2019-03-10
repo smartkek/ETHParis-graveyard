@@ -34,6 +34,8 @@ $('document').ready(function() {
         }
     });
     setTimeout(function(){updateTokenInfo(tokenAddr)}, 500);
+    $('#inputTokenAddress').val(tokenAddr);
+    setTimeout(function(){setUserTokensText(tokenAddr)}, 500);
 
     $('#btn-0x').click(function() {
         zeroExInstant.render(
@@ -49,9 +51,15 @@ $('document').ready(function() {
 
 function updateTokenInfo(tokenAddr) {
     getTokenInfo(tokenAddr, function(name, symbol, totalSupply) {
+        $('#title-token-name').text(name);
+        $('#title-token-symbol').text(symbol);
+        $('#title-token-addr').text(tokenAddr);
+        $('#title-total-supply').text(`Total tokens ${totalSupply}`);
+        $('#title-total-burnt').text(`Burnt ${totalBurnt} (${totalBurnt / totalSupply * 100}%)`);
+/*
         $('#title-token-name').text(titleTokenNameText.replace('TOKEN_NAME', name).replace('TOKEN_SYMBOL', symbol));
         $('#title-token-addr').text(titleTokenAddrText.replace('TOKEN_ADDR', tokenAddr));
-        $('#title-total-burnt').text(titleTotalBurntText.replace('TOKEN_AMOUNT', totalBurnt).replace('PERCENT', totalBurnt / totalSupply * 100));
+        $('#title-total-burnt').text(titleTotalBurntText.replace('TOKEN_AMOUNT', totalBurnt).replace('PERCENT', totalBurnt / totalSupply * 100));*/
     });
 }
 
@@ -71,11 +79,13 @@ function findGetParameter(parameterName) {
 
 function addComment(eventData) {
     // create feed item
-    var commentItem = commentItemTemplate.replace("TOKEN_AMOUNT", eventData.amount);
-    commentItem = commentItem.replace("BURNER_ADDR", eventData.burner);
-    commentItem = commentItem.replace("BURNER_MSG", eventData.message);
-
-    $('#list-comments').append(commentItem);
+    getTokenInfo(eventData.token, function(name, symbol, totalSupply) {
+        var commentItem = commentItemTemplate.replace("TOKEN_AMOUNT", eventData.amount);
+        commentItem = commentItem.replace("BURNER_ADDR", eventData.burner);
+        commentItem = commentItem.replace("BURNER_MSG", eventData.message);
+        commentItem = commentItem.replace("PERCENT", eventData.amount / totalSupply * 100)
+        $('#list-comments').append(commentItem);
+    });
 }
 
 
@@ -108,42 +118,10 @@ function getTokenInfo(tokenAddr, cb) {
 
 
 var commentItemTemplate = `
-<li class="list-group-item">
-  <div class="row">
-    <div class="col-md-6">
-      <small class="text-muted">BURNER_ADDR</small>
-    </div>
-    <div class="col-md-4">
-      <small class="text-muted">pkondr.eth</small>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-      <p>BURNER_MSG</p>
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <h6 class="text-muted">TOKEN_AMOUNT tokens</h6>
-    </div>
-  </div>
-</li>
-`
-
-var titleTotalBurntText = `
-Total burnt: TOKEN_AMOUNT (PERCENT%)
-`
-
-var titlePositionText = `
-Position: INDEX
-`
-
-var titleTokenNameText = `
-TOKEN_NAME (TOKEN_SYMBOL)
-`
-
-var titleTokenAddrText = `
-TOKEN_ADDR
+<div class="info-message">
+  <p class="adress">BURNER_ADDR</p>
+  <p class="author-comm">pkondr.eth</p>
+  <p class="text-message">BURNER_MSG</p>
+  <p class="all-t">Burnt TOKEN_AMOUNT (PERCENT%)</p>
+</div>
 `
