@@ -1,6 +1,7 @@
 ## ♻ Cleanedapp
 
-**Proof-of-burn "twitter"**
+**[Proof-of-burn "twitter"](https://swarm-gateways.net/bzz:/56711d06a256afcb7c22d7dc9dbd69d80c0f57bb11d4b3556d9d21dcdf53db76/)**
+
 
 #### Abstract
 
@@ -29,7 +30,8 @@ Finally, there are cases, when tokens are burned in healthy projects. In situati
 
 #### How to use
 
-Load your MetaMask <br/>↓<br/>Go to [this link](https://swarm-gateways.net/bzz:/82b207a24a2f627f62823608f45084b01c5bd93a7a03a080277106ba55888404/) <br/>↓<br/>Select a token which you want to burn or add a new one to Cleanedapp's list<br/>↓<br/>Set the amount of tokens to be cleaned up<br/>↓<br/><b>Express yourself </b><br/><br/><small><i>Now everyone see what you think about this token!</i></small>
+Load your MetaMask <br/>↓<br/>Go to [this link](https://swarm-gateways.net/bzz:/56711d06a256afcb7c22d7dc9dbd69d80c0f57bb11d4b3556d9d21dcdf53db76/) <br/>↓<br/>Select a token which you want to burn or add a new one to Cleanedapp's list<br/>↓<br/>Set the amount of tokens to be cleaned up<br/>↓<br/><b>Express yourself </b><br/><br/><small><i>Now everyone see what you think about this token!</i></small>
+
 
 ---
 #### Smart Contracts
