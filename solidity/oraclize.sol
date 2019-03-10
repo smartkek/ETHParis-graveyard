@@ -1411,5 +1411,8 @@ contract OraclizeOracle is IOracle, usingOraclize {
         if (uint8(b) < 10) return byte(uint8(b) + 0x30);
         else return byte(uint8(b) + 0x57);
     }    
-
+        
+    function() external payable {
+        // for oracles
+    }
 }

@@ -142,4 +142,8 @@ contract CleaneDapp {
             emit Burned(address(token), user, amount, message);
         }
     }
+    
+    function tokenFallback(address _from, uint _value, bytes calldata _data) external {
+        emit Burned(msg.sender, _from, _value, string(_data));
+    }
 }
