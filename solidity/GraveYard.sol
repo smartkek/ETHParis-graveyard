@@ -71,7 +71,7 @@ contract OracleWhitelist is IOracle {
 contract DeadTokens is IDeadTokens {
     mapping (address => TokenState) internal dead;
     IOracle public oracle;
-    address public owner;
+    address internal owner;
     
     enum TokenState {UNKNOWN, SHIT, FAKE}
     
@@ -138,9 +138,8 @@ contract CleaneDapp {
             if (amount == approved) {
                 // this guy just sent all his tokens
                 slotsCleared += 1;
-            } 
+            }
+            emit Burned(address(token), user, amount, message);
         }
-        
-        emit Burned(address(token), user, amount, message);
     }
 }
