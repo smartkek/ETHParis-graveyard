@@ -1,6 +1,6 @@
 ## ♻ Cleanedapp
 
-**[Proof-of-burn "twitter"](https://swarm-gateways.net/bzz:/56711d06a256afcb7c22d7dc9dbd69d80c0f57bb11d4b3556d9d21dcdf53db76/)**
+**[Proof-of-burn "twitter"](https://swarm-gateways.net/bzz:/6c41b0e4e24593f5155277e2a1ec45545db24d424974eb71173421523db0e2a6/)**
 
 
 #### Abstract
