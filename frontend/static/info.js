@@ -34,6 +34,16 @@ $('document').ready(function() {
         }
     });
     setTimeout(function(){updateTokenInfo(tokenAddr)}, 500);
+
+    $('#btn-0x').click(function() {
+        zeroExInstant.render(
+            {
+                orderSource: 'https://api.radarrelay.com/0x/v2/',
+                availableAssetDatas: ['0xf47261b0000000000000000000000000' + tokenAddr.slice(2)]
+            },
+            'body',
+        );
+    });
 });
 
 

@@ -35,7 +35,19 @@ $('document').ready(function() {
             console.log(err);
         }
     });
-    setInterval(updateTopList, 3000);
+    setTimeout(updateTopList, 3000);
+
+    $('#list-top-tokens').on("click", "button.btn-comments", function() {
+        var tokenAddr = $(this).attr('id').slice(5);
+        window.location.href = "/info?tokenAddr=" + tokenAddr;
+        return false;
+    });
+
+    $('#list-top-tokens').on("click", "button.btn-burn", function() {
+        var tokenAddr = $(this).attr('id').slice(5);
+        window.location.href = "/burn?tokenAddr=" + tokenAddr;
+        return false;
+    });
 });
 
 async function updateTopList() {
@@ -57,7 +69,7 @@ function updateTopListItem(tokenAddr, i) {
         topItem = topItem.replace("INDEX", i+1);
         topItem = topItem.replace("PERCENT", allTokens[tokenAddr] / totalSupply * 100);
         topItem = topItem.replace("COMMENTS_NUM", 20);
-        topItem = topItem.replace("TOKEN_ADDR", tokenAddr);
+        topItem = topItem.replace(/TOKEN_ADDR/gi, tokenAddr);
         if (addedToTop[tokenAddr] !== true) {
             $('#list-top-tokens').append(topItem);
             addedToTop[tokenAddr] = true;
@@ -141,8 +153,8 @@ var topItemTemplate = `
             TOKEN_AMOUNT total burned
           </div>
           <div class="col-md-4">
-          <button type="button" class="btn btn-secondary">COMMENTS_NUM comments</button>
-          <button type="button" class="btn btn-danger">Burn</button>
+          <button type="button" class="btn btn-secondary btn-comments" id="info-TOKEN_ADDR">comments</button>
+          <button type="button" class="btn btn-danger btn-burn" id="burn-TOKEN_ADDR">Burn</button>
           </div>
         </div>
       </div>
