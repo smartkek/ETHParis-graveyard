@@ -762,16 +762,40 @@ contract Ownable {
     }
 }
 
-contract OracleChainlink is Chainlinked, Ownable {
+interface IERC20 {
+    function totalSupply() external returns (uint);
+    
+    function balanceOf(address who) external view returns (uint256);
+    function transfer(address to, uint256 value) external returns (bool);
+    function allowance(address owner, address spender) external view returns (uint256);
+    function transferFrom(address from, address to, uint256 value) external returns (bool);
+    function approve(address spender, uint256 value) external returns (bool);
+    
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+
+interface IDeadTokens {
+    function bury(IERC20 token) external;
+    function buried(IERC20 token) external view returns (bool);
+    function callback(IERC20 token, bool valid) external;
+}
+
+interface IOracle {
+    function test(address token) external;
+}
+
+contract OracleChainlink is IOracle, Chainlinked, Ownable {
     using SafeMath for uint256;
     uint256 constant private ORACLE_PAYMENT = 1 * LINK; // solium-disable-line zeppelin/no-arithmetic-operations
-
+    IDeadTokens dt;
 
     address constant ROPSTEN_ENS = 0x112234455C3a32FD11230C42E7Bccd4A84e02010;
     bytes32 constant ROPSTEN_CHAINLINK_ENS = 0xead9c0180f6d685e43522fcfe277c2f0465fe930fb32b5b415826eacf9803727;
 
-    constructor() Ownable() public {
+    constructor(address _dt) Ownable() public {
         setChainlinkWithENS(ROPSTEN_ENS, ROPSTEN_CHAINLINK_ENS);
+        dt = IDeadTokens(_dt);
     }
     
 
@@ -797,13 +821,12 @@ contract OracleChainlink is Chainlinked, Ownable {
     event Query(string query, string jsonpath);
     event QueryId(bytes32 id);
 
-    function requestTxCount(address addr) 
+    function test(address addr) 
         public
     {
         Chainlink.Request memory req = newRequest(bytes32("fb5fb7b18921487fb26503cb075abf41"), this, this.contractTxCount.selector);
-        // string memory addrStr = addrToString(addr);
-        // string memory query = string(abi.encodePacked("https://api.blockchair.com/ethereum/dashboards/address/0x", addrStr));
-        string memory query = "https://api.blockchair.com/ethereum/dashboards/address/0x1985365e9f78359a9b6ad760e32412f4a445e862";
+        string memory addrStr = addrToString(addr);
+        string memory query = string(abi.encodePacked("https://api.blockchair.com/ethereum/dashboards/address/0x", addrStr));
         
         req.add("url", query);
         
@@ -817,16 +840,11 @@ contract OracleChainlink is Chainlinked, Ownable {
         emit QueryId(id);
     }
 
-    event ItWorked(address, uint);
-    mapping (address => uint) public txCount;
-
-
     function contractTxCount(bytes32 _requestId, uint256 _txCount)
         public
         recordChainlinkFulfillment(_requestId)
     {
-        txCount[queries[_requestId]] = _txCount;
-        emit ItWorked(queries[_requestId], _txCount);
+        dt.callback(IERC20(queries[_requestId]), _txCount > 10);
         delete queries[_requestId];
     }
 
