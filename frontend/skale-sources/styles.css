@@ -1,0 +1,283 @@
+* {margin: 0; padding: 0; box-sizing: border-box;}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial;
+}
+body{
+	background-color: #eeeeee}
+
+.fixed-container{
+	max-width: 1000px;
+	margin: 0 20% 0 20%;
+
+}
+.top {
+	height: 50px;
+	background-color: #FFFFFF;
+	background-repeat: no-repeat;
+	background-position: center ;
+	border-bottom: 1px solid #eeeeee;
+	margin-bottom: 10px;
+}
+.search {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin-left: 10px;
+	padding-top: 10px;
+}
+.search p{
+	font-size: 14px;
+	margin-left: 10px;
+}
+h3 a{
+	font-size: 25px;
+	margin-right: 10px;
+	text-decoration:none;
+}
+
+.search input {
+  width: 60%;
+  height: 30px;
+  padding-left: 20px;
+  color: rgb(24,24,24);
+  border: 2px solid rgb(198,198,198);
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(0,0,0,.1);
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+
+}
+
+.content{
+	display: flex;
+	padding-top: 10px;
+}
+.left-column{
+	margin-right: 20px;
+	width: 66.66%;
+	display: flex;
+	flex-direction: column;
+	padding-top: 10px;
+	background-color: white;
+}
+.project{
+	background-color: white;
+	margin: 10px 20px;
+  	border: 1px solid #eeeeee;
+}
+.btn-burn-top{
+	height: 30px;
+	margin: 0 20px;
+	color: rgb(24,24,24);
+  	border: 1px solid rgb(198,198,198);
+  	background: #f7f7f7;
+
+}
+.project-header{
+	border-bottom: 1px solid #eeeeee;
+	display: flex;
+	justify-content: space-between;
+
+}
+.token-name{
+	text-decoration:none;
+	padding: 10px;
+}
+.project-body {
+	display: flex;
+	padding: 10px;
+	align-items: center;
+}
+.project-body p{
+	font-size: 14px;
+
+}
+.short-name{
+	display: block;
+	width: 40px;
+	margin-right: 10px;
+
+}
+
+.info-short-name{
+	border: 1px solid gray;
+	width: 100px;
+	height: 100px;
+	margin-left: 10px;
+	padding: 15px 10px;
+	font-size: 40px;
+}
+
+.btn-burn-project{
+	float: right;
+	height: 40px;
+	width: 60px;
+}
+
+.right-column{
+	display: flex;
+	flex-direction: column;
+	width: 33.33%;
+	padding-top: 10px;
+	background-color: white;
+}
+
+.story{
+	border: 1px solid #eeeeee;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 0 20px 20px 20px ;
+	width: auto;
+}
+
+.story-project-name{
+	text-decoration: none;
+}
+
+.author-comm{
+	font-size: 12px;
+	color: gray;
+	font-style: italic;
+}
+
+.message{
+	padding: 15px;
+	border: 1px solid #EEEEEE;
+	border-radius: 10px;
+	margin:10px;
+}
+
+.top-info-project{
+	display: flex;
+	align-items: center;
+	background-color: #FFFFFF;
+	width: 100%;
+}
+
+
+.info-content{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+}
+
+.name-project{
+	font-size: 20px;
+}
+.info p{
+	margin: 10px;
+}
+
+.name-adress-ens{
+	margin: 20px;
+}
+
+.ENS{
+	margin-top: 10px;
+}
+
+.info-column-left{
+	background-color: #FFFFFF;
+	width: 33.33%;
+	margin-right: 10px;
+}
+
+.btn{
+	width: 90%;
+	margin: 10px 10px;
+	height: 40px;
+	cursor: pointer;
+}
+.bary{
+	width: 45%;
+	height: 40px;
+	cursor: pointer;
+	float: left;
+	margin-top: 20px;
+
+}
+.burn{
+	width: 45%;
+	margin-top: 20px;
+	height: 40px;
+	cursor: pointer;
+	float: right;
+}
+
+.info-right-column{
+	background-color: #FFFFFF;
+	width: 66.66%;
+}
+
+.info-message{
+	border: 1px solid #EEEEEE;
+	border-radius: 10px;
+	margin: 20px;
+	width: auto;
+	padding: 10px;
+}
+
+.adress{
+	font-style: italic;
+	color: gray;
+}
+
+.text-message{
+	padding: 15px;
+	border: 1px solid #EEEEEE;
+	border-radius: 10px;
+	margin:10px;
+}
+
+.popup {
+	position: absolute;
+    top: 15%;
+    left: 35%;
+	background-color: white;
+	padding: 20px;
+	width: 450px
+}
+
+.sum{
+margin-left: 20px;
+width: 40px;
+margin-bottom: 30px;
+float: right;
+}
+
+.popup-container{
+	display: none;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	position: absolute;
+	top: 0;
+	z-index: 10;
+}
+.address{
+	height: 30px;
+	border: 1px solid #ebebeb;
+	background-color: #fcfcfc;
+	padding:10px;
+	width: 100%	
+}
+
+textarea{
+	border: 1px solid #ebebeb;
+	background-color: #fcfcfc;
+	max-width: 100%;
+	min-width: 100%;
+	height: 230px;
+	padding:10px;
+}
+.also{
+	text-align: center;
+	font-size: 14px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}

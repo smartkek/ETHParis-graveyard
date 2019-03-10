@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AboutProject</title>
+  <link rel="stylesheet" type="text/css" href="./styles.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://instant.0x.org/instant.js" /></script>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div class="fixed-container">
+        <div class="search">
+          <h3><a href="index.html">Cleanedapp</a></h3><!-- <input type="text" placeholder="Поиск по сайту" name="Search"> -->
+        </div>
+       </div>
+    </div>
+  </header>
+  <main>
+    <div class="popup-container">
+        <div class="popup">
+          <p>Token address<input type="text" class="address" id="inputTokenAddress"></p><br>
+          <p>Amount of tokens to burn<input type="text" class="sum" id="inputTokenAmount"></p>
+          <textarea id="inputMessage" placeholder="Enter message (max 240symbol)"></textarea><br>
+          <button class="bary" id="btn-bury">Add new token</button>
+          <button class="burn" id="btn-burn">Burn</button>
+        </div>
+      </div>
+    <div class="fixed-container">
+      <div class="top-info-project">
+        <div class="info-short-name" id="title-token-symbol">TKN</div>
+        <div class="name-adress-ens">
+          <p class="name-project" id="title-token-name">Token-name</p>
+          <p class="adress" id="title-token-addr">0x897354ebe940d137c4040f62a793f39b2388f236</p>
+          <p class="ENS">myawesometoken.eth</p>
+        </div>
+      </div>
+    </div>
+    <div class="fixed-container">
+      <div class="info-content">
+        <div class="info-column-left">
+          <div class="info">
+            <p id="title-total-supply">Всего токенов Y</p>
+            <p id="title-total-burnt">Сожжено ZZ (X%)</p>
+          </div>
+          <button class="btn click btn-my-burn">burn your tokens</button><br>
+          <button class="btn" id="btn-0x">buy with 0x</button><br>
+          <button class="btn">buy with KYBER</button><br>
+          <button class="btn">buy with UniSwap</button>
+        </div>
+        <div class="info-right-column" id="list-comments">
+          <!-- <div class="info-message">
+            <p class="adress">0x897354ebe940d137c4040f62a793f39b2388f236</p>
+            <p class="author-comm">Автор комментария</p>
+            <p class="text-message">Текст сообщения</p>
+            <p class="all-t">Сожжено токенов 100 (10%)</p>
+          </div> -->
+
+        </div>
+        </div>
+      </div>
+    </div>
+  </main>
+    <script src="./scriptjs.js" type='text/javascript'></script>
+    <script src="./info.js" type='text/javascript'></script>
+    <script src="./burn.js" type='text/javascript'></script>
+</body>
+</html>
+
+
+
+
