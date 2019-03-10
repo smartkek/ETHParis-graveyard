@@ -46,24 +46,6 @@ interface IOracle {
     function test(address token) external;
 }
 
-contract OracleChainlink is IOracle {
-    IDeadTokens internal dt;
-
-    constructor(IDeadTokens _dt) public {
-        dt = _dt;
-    }
-    
-    event AskChainlink(address);
-    
-    function test(address token) external {
-        emit AskChainlink(address(token));
-    }
-    
-    function chainlinkCallback(address token, bool valid) external {
-        dt.callback(IERC20(token), valid);
-    }
-}
-
 contract OracleWhitelist is IOracle {
     IDeadTokens internal dt;
     address internal owner;
@@ -106,10 +88,8 @@ contract DeadTokens is IDeadTokens {
         
         if (state == TokenState.SHIT) {
             return true;
-        } 
-        if (state == TokenState.SHIT) {
-            return false;
         }
+        return false;
     }
     
     function setOracle(IOracle _oracle) external {
@@ -124,7 +104,7 @@ contract DeadTokens is IDeadTokens {
     }
 }
 
-contract Crematorium {
+contract CleaneDapp {
     IDeadTokens dt;
     uint public slotsCleared;
     
@@ -136,7 +116,6 @@ contract Crematorium {
         require(dt.buried(token), "bury token first!");
         _;        
     }
-
 
     
     event Burned(address indexed token, address indexed user, uint amount, string message);
@@ -163,13 +142,5 @@ contract Crematorium {
         }
         
         emit Burned(address(token), user, amount, message);
-    }
-    
-    function buy(IERC20 token) external payable onlyBuried(token) {
-        // do some 0x magic
-    }
-    
-    function sell(IERC20 token, uint amount) external payable onlyBuried(token) {
-        // do some 0x magic
     }
 }
