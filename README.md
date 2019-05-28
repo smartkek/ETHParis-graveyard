@@ -4,7 +4,7 @@
 
 #### We WON!
 
-[Cleanedapp presenting as finalists of ETHParis 2019.](https://www.youtube.com/watch?v=UQS27H-pvhQ&feature=youtu.be)
+[Cleanedapp presenting as one of the winners @ ETHParis 2019.](https://www.youtube.com/watch?v=UQS27H-pvhQ&feature=youtu.be)
 
 #### Abstract
 
